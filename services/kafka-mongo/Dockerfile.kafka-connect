@@ -1,0 +1,14 @@
+FROM confluentinc/cp-kafka-connect:7.4.0
+
+# Installer plugin Kafka Connect MongoDB (official by MongoDB)
+RUN confluent-hub install --no-prompt mongodb/kafka-connect-mongodb:1.11.0
+
+# Installer plugin Kafka Connect HDFS 
+RUN confluent-hub install --no-prompt confluentinc/kafka-connect-hdfs:5.5.14
+
+# Définir le chemin des plugins
+ENV CONNECT_PLUGIN_PATH="/usr/share/java,/usr/share/confluent-hub-components"
+
+# Optionnel : Copie de fichiers config si besoin
+# COPY connector-configs/ /etc/kafka-connect/
+
