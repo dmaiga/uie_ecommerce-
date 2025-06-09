@@ -3,12 +3,14 @@
   "config": {
     "connector.class": "com.mongodb.kafka.connect.MongoSinkConnector",
     "tasks.max": "1",
-    "topics": "test-mongo",
+    "topics": "user_clicks",
     "connection.uri": "mongodb://mongo:27017",
-    "database": "streaming",
-    "collection": "testData",
+    "database": "uie_ecommerce",
+    "collection": "user_clicks_events",
     "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter.schemas.enable": "false",
     "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-    "value.converter.schemas.enable": "false"
+    "document.id.strategy": "com.mongodb.kafka.connect.sink.processor.id.strategy.BsonOidStrategy", 
+    "writemodel.strategy": "com.mongodb.kafka.connect.sink.writemodel.strategy.InsertOneDefaultStrategy"
   }
 }

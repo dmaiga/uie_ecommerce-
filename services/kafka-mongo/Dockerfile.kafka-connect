@@ -9,6 +9,18 @@ RUN confluent-hub install --no-prompt confluentinc/kafka-connect-hdfs:5.5.14
 # Définir le chemin des plugins
 ENV CONNECT_PLUGIN_PATH="/usr/share/java,/usr/share/confluent-hub-components"
 
-# Optionnel : Copie de fichiers config si besoin
-# COPY connector-configs/ /etc/kafka-connect/
+# Optionnel : Copie des fichiers config si besoin
+#COPY hadood-conf/ /etc/kafka-connect/
+# Créer le répertoire de scripts
+USER root
+RUN mkdir -p /scripts
+# Copie des connecteurs personnalisés 
+COPY ./post-connectors.sh /scripts/post-connectors.sh
+COPY ./mongo-sink.json /scripts/mongo-sink.json
+COPY ./hdfs-sink.json /scripts/hdfs-sink.json
+RUN chmod +x /scripts/post-connectors.sh
 
+
+USER appuser
+# Lancer Kafka Connect, attendre qu'il soit prêt, puis exécuter le script d'enregistrement
+CMD ["bash", "-c", "/etc/confluent/docker/run & sleep 5 && /scripts/post-connectors.sh && wait"]

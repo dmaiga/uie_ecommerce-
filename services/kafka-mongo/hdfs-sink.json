@@ -1,0 +1,28 @@
+{
+  "name": "hdfs-sink-connector",
+  "config": {
+    "connector.class": "io.confluent.connect.hdfs.HdfsSinkConnector",
+    "tasks.max": "1",
+    "topics": "user_clicks",
+
+    "hdfs.url": "hdfs://namenode:8020",
+    "hadoop.conf.dir": "/etc/hadoop/conf",
+    "hdfs.authentication.kerberos": "false",
+
+    "flush.size": "3",
+    "topics.dir": "/kafka-connect/uie_ecommerce",
+
+    "format.class": "io.confluent.connect.hdfs.json.JsonFormat",
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "false",
+
+    "partitioner.class": "io.confluent.connect.storage.partitioner.TimeBasedPartitioner",
+    "path.format": "'year'=YYYY/'month'=MM/'day'=dd/'hour'=HH",
+    "locale": "en",
+    "timezone": "UTC",
+    "partition.duration.ms": "3600000",
+
+    "schema.compatibility": "NONE"
+  }
+}

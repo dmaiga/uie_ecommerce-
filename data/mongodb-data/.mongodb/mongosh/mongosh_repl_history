@@ -1,0 +1,63 @@
+show collections
+use uie_ecommerce
+db.user_clicks_events.find().count()
+db.user_clicks_events.find()
+show collections;
+use uie_ecommerce
+show databases;
+}
+  printjson(cursor.next());
+while (cursor.hasNext()) {
+var cursor = db.user_clicks_events.find();
+help
+db.user_clicks_events.find().all()
+db.user_clicks_events.find().count()
+"it"
+it
+db.user_clicks_events.find().limit(100)
+db.user_clicks_events.find().count()
+db.user_clicks_events.find().coount()
+db.user_clicks_events.find().pretty()
+db.user_clicks_events.find()
+show collections;
+use uie_ecommerce
+show databases;
+db.dropDatabase()
+show databases;
+db.user_clicks_events.find()
+show collections
+use uie_ecommerce
+show databases;
+db.user_clicks_events.find()
+show collections
+use uie_ecommerce
+db.user_clicks_events.stats();
+show collections
+db.user_click_events.stats()
+use uie_ecommerce;
+db.user_clicks_events.find()
+show collections
+show collection;
+show collection
+use uie_ecommerce;
+show databases;
+show collections
+rs.status();
+show collections
+db.user_clicks_events.drop();
+use uie_ecommerce;
+rs.initiate();
+rs.initiate(à=);
+drop database uie_ecommerce;
+drop database uie_ecommerce
+show collections
+use uie_ecommerce
+exit
+db.user_clicks_events.find().pretty()
+use uie_ecommerce
+db.user_clicks_events.find()
+show collections
+db.user_clicks_events.find()
+show collections
+show collection
+use uie_

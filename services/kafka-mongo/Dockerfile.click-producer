@@ -1,0 +1,16 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Copier les scripts
+COPY simulate_click_stream.py .
+COPY wait-for-kafka.sh .
+
+# Installer kafka-python et netcat-openbsd
+RUN apt-get update && \
+    apt-get install -y netcat-openbsd && \
+    pip install kafka-python faker && \
+    chmod +x wait-for-kafka.sh
+
+# Commande de démarrage
+CMD ["./wait-for-kafka.sh", "python", "simulate_click_stream.py"]

@@ -1,0 +1,11 @@
+rating,product,timestamp,comment_id,comment,user_id
+1,mouse,2025-06-08T03:01:55.773032,8b1a1f85-341e-4cd2-b08d-58578f0c8571,Excellent!,user_17
+2,keyboard,2025-06-08T03:01:55.773127,b9152a87-287c-4d4a-88bc-7a60c56f360d,Will buy again,user_13
+5,keyboard,2025-06-08T03:01:55.773218,13a82aa4-3680-421d-bb02-217a79761d5f,Will buy again,user_16
+5,headphones,2025-06-08T03:01:55.773311,6cec37c8-e756-4a45-bb0e-a04ba96c89b4,Great product!,user_1
+4,headphones,2025-06-08T03:01:55.773408,6f8b8cb0-b3a3-4517-8d23-87b5a7150a56,Excellent!,user_7
+2,headphones,2025-06-08T03:01:55.773503,3be35c3e-8469-40ea-9d94-855ff058f5af,Not satisfied,user_6
+1,keyboard,2025-06-08T03:01:55.773595,22467830-b4be-4eb4-b5c3-be89ff74b3b9,Excellent!,user_20
+1,keyboard,2025-06-08T03:01:55.773704,4050fc36-70fe-40b7-9566-f04129068bfb,Not satisfied,user_2
+1,headphones,2025-06-08T03:01:55.773798,35e6a267-7c3c-43b1-aec7-f89a6e05cf6c,Excellent!,user_19
+5,laptop,2025-06-08T03:01:55.773890,2e99c6ed-bbf9-47b4-97b0-d956f3e49e61,Will buy again,user_9

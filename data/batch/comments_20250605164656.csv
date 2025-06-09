@@ -1,0 +1,11 @@
+rating,product,timestamp,comment_id,comment,user_id
+1,keyboard,2025-06-05T16:46:56.958476,a1940ef2-4d37-4b58-bc9d-b5231041cae5,Great product!,user_17
+4,headphones,2025-06-05T16:46:56.958603,a8661789-c6f3-4e63-99f5-b26c47f3522f,Excellent!,user_7
+5,monitor,2025-06-05T16:46:56.958718,71801e25-76e2-4140-9573-1a9de45acea3,Too expensive,user_3
+3,keyboard,2025-06-05T16:46:56.958829,4081c017-4a7c-42d8-b529-8eda5683b563,Great product!,user_15
+1,keyboard,2025-06-05T16:46:56.958941,67e17f93-07ec-4799-a7f1-b2b1af717070,Excellent!,user_17
+1,laptop,2025-06-05T16:46:56.959052,c83f17b4-e4af-4677-839a-6553b66719e8,Will buy again,user_2
+1,monitor,2025-06-05T16:46:56.959162,a72061ce-f4ac-47c4-9b3a-be020b259268,Will buy again,user_13
+4,keyboard,2025-06-05T16:46:56.959287,14543e0d-9016-4c37-bc92-014c06afddbb,Too expensive,user_12
+3,keyboard,2025-06-05T16:46:56.959398,fe622435-300b-4468-8bb9-a6e33e04ac8a,Not satisfied,user_19
+4,monitor,2025-06-05T16:46:56.959507,7d89c754-b735-4a09-90c8-ff4d0c9cfc94,Not satisfied,user_13
