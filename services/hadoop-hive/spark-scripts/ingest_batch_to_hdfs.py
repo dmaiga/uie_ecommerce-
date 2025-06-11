@@ -1,25 +1,26 @@
-# scripts/ingest_batch_to_hdfs.py
-
+# ingest_batch_to_hdfs.py
 from pyspark.sql import SparkSession
+from pyspark.sql.functions import current_date
 
 spark = SparkSession.builder.appName("IngestBatchToHDFS").getOrCreate()
 
-# Lecture des CSV dans le conteneur
 transactions_path = "/opt/spark-data/batch/transactions_*.csv"
 comments_path = "/opt/spark-data/batch/comments_*.csv"
 
-# Ingestion des transactions
+# Lecture
 transactions_df = spark.read.option("header", "true").option("inferSchema", "true").csv(transactions_path)
-transactions_df.write.mode("append").csv(
-    "hdfs://namenode:8020/user/hive/warehouse/data/transactions/",
-    header=True
-)
-
-# Ingestion des commentaires
 comments_df = spark.read.option("header", "true").option("inferSchema", "true").csv(comments_path)
-comments_df.write.mode("append").csv(
-    "hdfs://namenode:8020/user/hive/warehouse/data/comments/",
-    header=True
+
+# Ajout de colonne de date d’ingestion
+transactions_df = transactions_df.withColumn("ingestion_date", current_date())
+comments_df = comments_df.withColumn("ingestion_date", current_date())
+
+# Ecriture dans HDFS 
+transactions_df.write.mode("append").parquet(
+    "hdfs://namenode:8020/user/hive/warehouse/data/transactions/"
+)
+comments_df.write.mode("append").parquet(
+    "hdfs://namenode:8020/user/hive/warehouse/data/comments/"
 )
 
-print("✅ Ingestion terminée dans HDFS.")
+print("✅ Ingestion terminée dans HDFS avec colonne ingestion_date.")

@@ -1,2 +1,5 @@
 # Ignore logs
 services/spark/logs/
+services/hadoop-hive/trino/data/etc
+services/hadoop-hive/trino/data/plugin
+services/hadoop-hive/trino/data/secrets-plugin

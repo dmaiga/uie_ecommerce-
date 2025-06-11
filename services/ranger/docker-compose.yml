@@ -1,0 +1,35 @@
+# services/ranger/docker-compose.yml
+
+
+services:
+  ranger-admin:
+    build: .
+    container_name: ranger-admin
+    ports:
+      - "6080:6080"
+    environment:
+      - DB_HOST=mysql
+      - DB_NAME=ranger
+      - DB_USER=rangeradmin
+      - DB_PASSWORD=rangeradmin
+    depends_on:
+      - mysql
+    volumes:
+      - ranger-data:/opt/ranger
+
+  mysql:
+    image: mysql:5.7
+    container_name: ranger-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ranger
+      - MYSQL_USER=rangeradmin
+      - MYSQL_PASSWORD=rangeradmin
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  ranger-data:
+  mysql-data:
