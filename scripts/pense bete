@@ -1,0 +1,64 @@
+metabase
+mot de passe dadi01
+Kafka
+create
+	 kafka-topics --create --bootstrap-server kafka:9092  --replication-factor 1 --partitions 1  --topic test-mongo
+lister 
+	kafka-topics --bootstrap-server kafka:29092 --list-consumer
+	 kafka-console-consumer --bootstrap-server kafka:29092 --topic user_clicks --from-beginning
+delete 
+	kafka-topics --delete --topic connect-offsets --bootstrap-server localhost:9092
+
+
+MongoDB 
+affiche toute les donnees saisi 
+rs0 [direct: primary] uie_ecommerce> var cursor = db.user_clicks_events.find();
+while (cursor.hasNext()) {
+ printjson(cursor.next());
+
+
+db = db.getSiblingDB('uie_ecommerce');
+
+db.createUser({
+  user: 'metabase',
+  pwd: 'metapass',
+  roles: [
+    { role: 'readWrite', db: 'uie_ecommerce' },
+    { role: 'read', db: 'admin' }
+  ]
+});
+
+-----table kpi HIVE ---
+kpi : nbr de transaction
+CREATE TABLE hive.uie_ecommerce.kpi_nb_transactions (
+    product VARCHAR,
+    nb_transactions BIGINT,
+    kpi_date DATE
+)
+WITH (
+    external_location = 'hdfs://namenode:8020/user/hive/warehouse/data/kpis/kpi_nb_transactions/',
+    format = 'PARQUET'
+);
+
+kpi: total sent
+CREATE TABLE hive.uie_ecommerce.kpi_total_spent (
+    product VARCHAR,
+    total_spent DOUBLE,
+    kpi_date DATE
+)
+WITH (
+    external_location = 'hdfs://namenode:8020/user/hive/warehouse/data/kpis/kpi_total_spent/',
+    format = 'PARQUET'
+);
+
+kpi :average rating
+CREATE TABLE hive.uie_ecommerce.kpi_avg_rating (
+    product VARCHAR,
+    avg_rating DOUBLE,
+    kpi_date DATE
+)
+WITH (
+    external_location = 'hdfs://namenode:8020/user/hive/warehouse/data/kpis/kpi_avg_rating/',
+    format = 'PARQUET'
+);
+

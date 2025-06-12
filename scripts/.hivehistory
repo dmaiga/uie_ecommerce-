@@ -1,0 +1,16 @@
+show databases;
+CREATE TABLE hive.uie_ecommerce.kpi_nb_transactions (
+    product VARCHAR,
+    nb_transactions BIGINT,
+    kpi_date DATE
+)
+WITH (
+    external_location = 'hdfs://namenode:8020/user/hive/warehouse/data/kpis/kpi_nb_transactions/',
+    format = 'PARQUET'
+);
+show databases;
+use uie_ecommerce
+;
+show tables;
+select * from kpi_total_spent
+;
