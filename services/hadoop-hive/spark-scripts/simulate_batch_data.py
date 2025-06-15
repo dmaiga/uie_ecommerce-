@@ -5,6 +5,7 @@ import random
 import uuid
 from datetime import datetime, timezone
 import os
+import glob
 from faker import Faker
 
 fake = Faker()
@@ -34,21 +35,25 @@ def generate_comment():
     }
 
 def main():
-    now = datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S")
+    # 🔄 Nettoyer les anciens fichiers .csv dans le dossier
+    for file in glob.glob(os.path.join(DATA_DIR, "*.csv")):
+        os.remove(file)
+
     transactions = [generate_transaction() for _ in range(100)]
     comments = [generate_comment() for _ in range(100)]
 
-    with open(os.path.join(DATA_DIR, f"transactions_{now}.csv"), "w", newline='', encoding='utf-8') as f:
+    # ✅ Sauvegarde avec noms fixes
+    with open(os.path.join(DATA_DIR, "transactions.csv"), "w", newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=transactions[0].keys())
         writer.writeheader()
         writer.writerows(transactions)
 
-    with open(os.path.join(DATA_DIR, f"comments_{now}.csv"), "w", newline='', encoding='utf-8') as f:
+    with open(os.path.join(DATA_DIR, "comments.csv"), "w", newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=comments[0].keys())
         writer.writeheader()
         writer.writerows(comments)
 
-    print(f"✅ CSV batch written to {DATA_DIR} (timestamp: {now})")
+    print("✅ CSV batch written to", DATA_DIR)
 
 if __name__ == "__main__":
     main()

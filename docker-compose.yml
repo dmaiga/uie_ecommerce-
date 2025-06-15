@@ -1,3 +1,7 @@
+
+#===================================
+
+
 #====== BATCH =========
 services:
   # === Hadoop =====
@@ -6,12 +10,14 @@ services:
     container_name: namenode
     volumes:
       - namenode:/hadoop/dfs/name
+      - ./services/ranger/plugins/ranger-2.6.0-hdfs-plugin:/tmp/
+      - ./services/ranger/plugins/jackson-core:/opt/ranger-libs
     environment:
       - CLUSTER_NAME=test
     env_file:
       - ./services/hadoop-hive/hadoop-hive.env
     ports:
-      - "50070:50070"
+      - ":50070"
     networks:
       - stack-net
   datanode1:
@@ -19,12 +25,13 @@ services:
     container_name: datanode1
     volumes:
       - datanode1:/hadoop/dfs/data
+      - ./services/ranger/plugins/ranger-2.6.0-hdfs-plugin:/tmp/
     env_file:
       - ./services/hadoop-hive/hadoop-hive.env
     environment:
       SERVICE_PRECONDITION: "namenode:50070"
     ports:
-      - "50075:50075"
+      - ":50075"
     networks:
       - stack-net
 
@@ -39,6 +46,7 @@ services:
       SERVICE_PRECONDITION: "hive-metastore:9083"
     volumes:
       - ./scripts:/root
+      - ./services/ranger/plugins/ranger-2.6.0-hive-plugin:/tmp/
     ports:
       - "10000:10000"
     networks:
@@ -81,6 +89,7 @@ services:
 # ====== Spark =====
   spark-master:
     image: docker.io/bitnami/spark:3.5
+    hostname: spark
     container_name: spark-master
     ports:
       - "7077:7077"
@@ -111,7 +120,10 @@ services:
       - "8089:8081"  # Spark Worker 1 web UI
     volumes:
       - ./services/hadoop-hive/hive-site.xml:/spark/conf/hive-site.xml
-      - ./services/hadoop-hive/jars:/spark/jars    
+      - ./services/hadoop-hive/jars:/spark/jars
+      - ./services/hadoop-hive/spark-scripts:/spark-scripts 
+      - ./data:/opt/spark-data 
+    
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark:7077
@@ -135,6 +147,8 @@ services:
     volumes:
       - ./services/hadoop-hive/hive-site.xml:/spark/conf/hive-site.xml
       - ./services/hadoop-hive/jars:/spark/jars
+      - ./services/hadoop-hive/spark-scripts:/spark-scripts 
+      - ./data:/opt/spark-data 
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark:7077
@@ -148,6 +162,28 @@ services:
     networks:
       - stack-net
 
+
+# ============ Orchestration  ============
+  prefect-agent:
+    image: prefecthq/prefect:3.4.0-python3.10
+    container_name: prefect-agent
+    volumes:
+      - ./orchestration/prefect/flows:/app/flows
+      - ./orchestration/prefect/spark-scripts:/spark-scripts
+      - ./data:/data
+      - /var/run/docker.sock:/var/run/docker.sock  # 👈 permet d'utiliser "docker" depuis le container
+    networks:
+      - stack-net
+     
+    environment:
+      - PREFECT_API_URL=http://host.docker.internal:4200/api
+      - PREFECT_LOGGING_LEVEL=DEBUG
+    command: prefect worker start --pool default-agent-pool
+    depends_on:
+      - spark-master
+
+
+
 # =========== Stream =========
  # --- KAFKA + ZOOKEEPER ---
   zookeeper:
@@ -160,7 +196,7 @@ services:
       - "2181:2181"
     networks:
       - stack-net
-      #
+    
 
 
   kafka:
@@ -285,8 +321,7 @@ services:
     networks:
       - stack-net
 #====== Securite =====
-# --------------Ranger ---------------
- 
+
 
 
 
@@ -300,7 +335,12 @@ volumes:
   metabase-data:
   kafka_connect_data:
 
+ 
+
+
+
+
 
 networks:
   stack-net:
-    driver: bridge
+     external: true

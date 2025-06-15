@@ -14,3 +14,7 @@ use uie_ecommerce
 show tables;
 select * from kpi_total_spent
 ;
+show databases;
+use uie_ecommerce
+;
+show databases;
